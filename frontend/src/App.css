@@ -1,0 +1,731 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.landingPageContainer {
+    min-height: 100vh;
+    width: 100vw;
+    background: linear-gradient(rgba(18, 18, 20, 0.75), rgba(18, 18, 20, 0.95)), url("/background.jpg") center center / cover no-repeat fixed;
+    color: white;
+    font-family: 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    overflow-x: hidden;
+}
+
+.landingPageContainer nav {
+    padding: 1.5rem 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.landingPageContainer nav .navheader h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 0;
+    background: linear-gradient(90deg, #FF9839, #ff5e62);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.5px;
+}
+
+.landingPageContainer nav .navlist {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+
+.landingPageContainer nav .navlist p {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.85);
+    transition: color 0.3s ease;
+    cursor: pointer;
+}
+
+.landingPageContainer nav .navlist p:hover {
+    color: #FF9839;
+}
+
+.landingPageContainer nav .navlist div[role="button"] {
+    background: #FF9839;
+    padding: 0.6rem 1.6rem;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 152, 57, 0.25);
+}
+
+.landingPageContainer nav .navlist div[role="button"] p {
+    color: white;
+    font-weight: 600;
+}
+
+.landingPageContainer nav .navlist div[role="button"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 152, 57, 0.4);
+    background: #e68933;
+}
+
+.landingMainContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 5%;
+    min-height: calc(100vh - 90px);
+    gap: 2rem;
+}
+
+.landingMainContainer > div:nth-child(1) {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    animation: fadeIn 1s ease-out;
+}
+
+.landingMainContainer > div:nth-child(1) h1 {
+    font-size: clamp(3rem, 5vw, 4.5rem);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+    margin-top: 0;
+}
+
+.landingMainContainer > div:nth-child(1) p {
+    font-size: clamp(1.1rem, 2vw, 1.4rem);
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 2.5rem;
+}
+
+.landingMainContainer > div:nth-child(1) div[role="button"] {
+    background: linear-gradient(135deg, #FF9839 0%, #ff5e62 100%);
+    width: fit-content;
+    padding: 1.2rem 2.5rem;
+    border-radius: 50px;
+    box-shadow: 0 10px 30px rgba(255, 152, 57, 0.3);
+    transition: all 0.3s ease;
+}
+
+.landingMainContainer > div:nth-child(1) div[role="button"] a {
+    text-decoration: none;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 600;
+    display: block;
+}
+
+.landingMainContainer > div:nth-child(1) div[role="button"]:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 40px rgba(255, 152, 57, 0.45);
+}
+
+.landingMainContainer > div:nth-child(2) {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    animation: slideInRight 1s ease-out;
+}
+
+.landingMainContainer > div:nth-child(2) img {
+    max-width: 100%;
+    height: auto;
+    max-height: 70vh;
+    object-fit: contain;
+    filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.3));
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInRight {
+    from { opacity: 0; transform: translateX(50px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+/* Responsive Design */
+@media (max-width: 968px) {
+    .landingMainContainer {
+        flex-direction: column-reverse;
+        text-align: center;
+        padding: 4rem 5%;
+        justify-content: center;
+    }
+
+    .landingMainContainer > div:nth-child(1) {
+        align-items: center;
+    }
+
+    .landingMainContainer > div:nth-child(2) {
+        justify-content: center;
+        margin-bottom: 3rem;
+    }
+
+    .landingMainContainer > div:nth-child(2) img {
+        max-height: 45vh;
+    }
+}
+
+@media (max-width: 768px) {
+    .landingPageContainer nav {
+        flex-direction: column;
+        gap: 1.5rem;
+        padding: 1.5rem;
+        text-align: center;
+    }
+
+    .landingPageContainer nav .navlist {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1.2rem;
+    }
+}
+
+/* ==================== Authentication Page ==================== */
+.authPageContainer {
+    min-height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(18, 18, 24, 1) 0%, rgba(30, 20, 40, 1) 50%, rgba(18, 18, 24, 1) 100%);
+    font-family: 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    padding: 2rem 1rem;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Subtle decorative glow orbs */
+.authPageContainer::before {
+    content: '';
+    position: absolute;
+    top: -20%;
+    right: -10%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(255, 152, 57, 0.08) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.authPageContainer::after {
+    content: '';
+    position: absolute;
+    bottom: -20%;
+    left: -10%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(255, 94, 98, 0.06) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+@media (max-width: 480px) {
+    .authPageContainer {
+        padding: 1rem 0.75rem;
+    }
+}
+
+/* ==================== Home Page ==================== */
+.homePageContainer {
+    min-height: 100vh;
+    width: 100vw;
+    background: linear-gradient(160deg, rgba(18, 18, 24, 1) 0%, rgba(25, 20, 35, 1) 40%, rgba(18, 18, 24, 1) 100%);
+    color: white;
+    font-family: 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Decorative glow */
+.homePageContainer::before {
+    content: '';
+    position: absolute;
+    top: 10%;
+    left: -5%;
+    width: 450px;
+    height: 450px;
+    background: radial-gradient(circle, rgba(255, 152, 57, 0.07) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.homePageContainer::after {
+    content: '';
+    position: absolute;
+    bottom: 5%;
+    right: -5%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(255, 94, 98, 0.05) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+/* --- Nav Bar --- */
+.homeNavBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 5%;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    position: relative;
+    z-index: 10;
+}
+
+.homeNavBrand h2 {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 700;
+    background: linear-gradient(90deg, #FF9839, #ff5e62);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.3px;
+}
+
+.homeNavActions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* --- Main Content --- */
+.homeMainContent {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5%;
+    min-height: calc(100vh - 72px);
+    gap: 4rem;
+    position: relative;
+    z-index: 5;
+}
+
+/* Left Panel */
+.homeLeftPanel {
+    flex: 1.1;
+    display: flex;
+    align-items: center;
+    animation: fadeIn 1s ease-out;
+}
+
+.homeHeroContent {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.homeHeroContent h1 {
+    font-size: clamp(2.2rem, 4.5vw, 3.6rem);
+    font-weight: 800;
+    line-height: 1.15;
+    color: #fff;
+    margin: 0;
+}
+
+.homeHighlight {
+    background: linear-gradient(90deg, #FF9839, #ff5e62);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.homeSubtext {
+    font-size: clamp(1rem, 1.6vw, 1.15rem);
+    color: rgba(255, 255, 255, 0.55);
+    line-height: 1.6;
+    max-width: 520px;
+    margin: 0;
+}
+
+.homeJoinForm {
+    display: flex;
+    gap: 12px;
+    align-items: stretch;
+    margin-top: 0.5rem;
+    max-width: 520px;
+}
+
+/* Right Panel */
+.homeRightPanel {
+    flex: 0.9;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    animation: slideInRight 1s ease-out;
+}
+
+.homeRightPanel > img {
+    max-width: 100%;
+    width: 100%;
+    max-height: 65vh;
+    height: auto;
+    object-fit: contain;
+    border-radius: 24px;
+    filter: drop-shadow(0 20px 50px rgba(0, 0, 0, 0.35));
+}
+
+/* --- Responsive --- */
+@media (max-width: 968px) {
+    .homeMainContent {
+        flex-direction: column-reverse;
+        text-align: center;
+        padding: 3rem 5%;
+        gap: 2.5rem;
+        justify-content: center;
+    }
+
+    .homeLeftPanel {
+        justify-content: center;
+    }
+
+    .homeHeroContent {
+        align-items: center;
+    }
+
+    .homeSubtext {
+        max-width: 100%;
+    }
+
+    .homeJoinForm {
+        max-width: 100%;
+        justify-content: center;
+    }
+
+    .homeRightPanel {
+        justify-content: center;
+    }
+
+    .homeRightPanel > img {
+        max-height: 40vh;
+        max-width: 80%;
+    }
+}
+
+@media (max-width: 600px) {
+    .homeNavBar {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem;
+        text-align: center;
+    }
+
+    .homeNavActions {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .homeJoinForm {
+        flex-direction: column;
+    }
+
+    .homeHeroContent h1 {
+        font-size: clamp(1.8rem, 6vw, 2.4rem);
+    }
+}
+
+/* ==================== History Page ==================== */
+.historyPageContainer {
+    min-height: 100vh;
+    width: 100vw;
+    background: linear-gradient(160deg, rgba(18, 18, 24, 1) 0%, rgba(25, 20, 35, 1) 40%, rgba(18, 18, 24, 1) 100%);
+    color: white;
+    font-family: 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    overflow-x: hidden;
+    position: relative;
+}
+
+.historyPageContainer::before {
+    content: '';
+    position: absolute;
+    top: 5%;
+    right: -8%;
+    width: 450px;
+    height: 450px;
+    background: radial-gradient(circle, rgba(255, 152, 57, 0.06) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.historyPageContainer::after {
+    content: '';
+    position: absolute;
+    bottom: 10%;
+    left: -8%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(0, 180, 216, 0.05) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+/* --- History Nav --- */
+.historyNavBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 5%;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    position: relative;
+    z-index: 10;
+}
+
+.historyNavBrand {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.historyNavBrand h2 {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 700;
+    background: linear-gradient(90deg, #FF9839, #ff5e62);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.3px;
+}
+
+/* --- Content --- */
+.historyContent {
+    padding: 3rem 5%;
+    position: relative;
+    z-index: 5;
+    animation: fadeIn 0.8s ease-out;
+}
+
+/* --- Card Grid --- */
+.historyGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.2rem;
+}
+
+.historyCard {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    padding: 1.4rem 1.6rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 16px;
+    transition: all 0.3s ease;
+    cursor: default;
+}
+
+.historyCard:hover {
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba(255, 152, 57, 0.2);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25), 0 0 20px rgba(255, 152, 57, 0.06);
+}
+
+.historyCardIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background: rgba(255, 152, 57, 0.1);
+    flex-shrink: 0;
+}
+
+.historyCardInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    min-width: 0;
+}
+
+.historyCardDate {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+/* --- Empty State --- */
+.historyEmpty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 50vh;
+    text-align: center;
+}
+
+/* --- History Responsive --- */
+@media (max-width: 768px) {
+    .historyNavBar {
+        flex-direction: column;
+        gap: 1.2rem;
+        padding: 1rem;
+        text-align: center;
+    }
+
+    .historyContent {
+        padding: 2rem 4%;
+    }
+
+    .historyGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .historyNavBrand h2 {
+        font-size: 1.5rem;
+    }
+
+    .historyCard {
+        padding: 1rem 1.2rem;
+    }
+}
+
+/* ==================== Lobby / Join Room Page ==================== */
+.lobbyPageContainer {
+    min-height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(18, 18, 24, 1) 0%, rgba(30, 20, 40, 1) 50%, rgba(18, 18, 24, 1) 100%);
+    font-family: 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    padding: 2rem 1rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.lobbyPageContainer::before {
+    content: '';
+    position: absolute;
+    top: -15%;
+    left: -10%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(255, 152, 57, 0.07) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.lobbyPageContainer::after {
+    content: '';
+    position: absolute;
+    bottom: -15%;
+    right: -10%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(255, 94, 98, 0.05) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.lobbyCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 480px;
+    padding: 2.5rem;
+    gap: 2rem;
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 24px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4), 0 0 80px rgba(255, 152, 57, 0.06);
+    animation: fadeIn 0.8s ease-out;
+    position: relative;
+    z-index: 5;
+}
+
+/* --- Header --- */
+.lobbyHeader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+    text-align: center;
+}
+
+.lobbyIconCircle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: rgba(255, 152, 57, 0.1);
+    border: 1px solid rgba(255, 152, 57, 0.15);
+    margin-bottom: 0.5rem;
+}
+
+.lobbyTitle {
+    margin: 0;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #fff;
+}
+
+.lobbySubtext {
+    margin: 0;
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.45);
+}
+
+/* --- Form --- */
+.lobbyForm {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+}
+
+/* --- Video Preview --- */
+.lobbyVideoPreview {
+    width: 100%;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.lobbyVideoPreview video {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 16px;
+    transform: scaleX(-1);
+}
+
+/* --- Lobby Responsive --- */
+@media (max-width: 520px) {
+    .lobbyCard {
+        padding: 1.8rem 1.4rem;
+        border-radius: 20px;
+    }
+
+    .lobbyTitle {
+        font-size: 1.5rem;
+    }
+
+    .lobbyIconCircle {
+        width: 52px;
+        height: 52px;
+    }
+}

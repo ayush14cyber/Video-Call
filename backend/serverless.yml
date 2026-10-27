@@ -1,0 +1,60 @@
+service: video-call-backend
+frameworkVersion: '>=3.0.0'
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  region: us-east-1
+  stage: ${opt:stage, 'prod'}
+  memorySize: 512
+  timeout: 29
+  environment:
+    NODE_ENV: production
+    DB_USER: ${env:DB_USER, ''}
+    DB_PASSWORD: ${env:DB_PASSWORD, ''}
+    DB_CLUSTER: ${env:DB_CLUSTER, ''}
+    DB_NAME: ${env:DB_NAME, 'videoConferencing'}
+    MONGO_URI: ${env:MONGO_URI, ''}
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - execute-api:ManageConnections
+          Resource:
+            - "arn:aws:execute-api:*:*:*/*/@connections/*"
+
+package:
+  patterns:
+    - '!node_modules/nodemon/**'
+    - '!node_modules/pm2/**'
+    - '!../../frontend/**'
+
+functions:
+  # REST API Handler (Express via serverless-http)
+  api:
+    handler: src/lambda/apiHandler.handler
+    events:
+      - httpApi:
+          path: /{proxy+}
+          method: ANY
+      - httpApi:
+          path: /
+          method: ANY
+
+  # WebSocket API Gateway Handler (WebRTC signaling & real-time chat)
+  websocket:
+    handler: src/lambda/wsHandler.handler
+    events:
+      - websocket:
+          route: $connect
+      - websocket:
+          route: $disconnect
+      - websocket:
+          route: $default
+      - websocket:
+          route: join-call
+      - websocket:
+          route: signal
+      - websocket:
+          route: chat-message
