@@ -225,7 +225,7 @@ export default function VideoMeetComponent() {
 
 
     let connectToSocketServer = () => {
-        socketRef.current = connectSocket(server_url, { secure: false });
+        socketRef.current = connectSocket(server_url, { secure: server_url.startsWith("https") });
 
         socketRef.current.on("signal", gotMessageFromServer);
 
@@ -311,8 +311,13 @@ export default function VideoMeetComponent() {
             }
         });
 
-        socketRef.current.on("connect", () => {
-            socketIdRef.current = socketRef.current.id;
+        socketRef.current.on("connect", (id) => {
+            if (id) {
+                socketIdRef.current = id;
+            }
+            else if (socketRef.current.id) {
+                socketIdRef.current = socketRef.current.id;
+            }
             socketRef.current.emit("join-call", window.location.href, username || "Guest");
         });
     }

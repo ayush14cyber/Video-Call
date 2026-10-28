@@ -42,22 +42,18 @@ app.get("/health", (req, res) => {
 const distPath = path.join(__dirname, "../../frontend/dist");
 app.use(express.static(distPath));
 
-// Only start HTTP & Socket.IO server if run directly (local development: node src/app.js)
-// In AWS Lambda, handlers import app without starting an HTTP listener
-const isDirectRun =
-  Boolean(process.argv[1]) &&
-  (path.resolve(process.argv[1]) === path.resolve(__filename) ||
-   process.argv[1].endsWith("app.js"));
+// Only start HTTP & Socket.IO server if not running in AWS Lambda
+const isStandalone = !process.env.AWS_LAMBDA_FUNCTION_NAME && process.env.NODE_ENV !== "test";
 
-if (isDirectRun && !process.env.AWS_LAMBDA_FUNCTION_NAME) {
+if (isStandalone) {
   const server = createServer(app);
   connectToSocket(server);
 
   connectDB()
     .then(() => {
       const port = app.get("port");
-      server.listen(port, () => {
-        console.log(`Server is running on port ${port} (Local/Standalone mode)`);
+      server.listen(port, "0.0.0.0", () => {
+        console.log(`Server is running on port ${port} (Standalone/Render mode)`);
       });
     })
     .catch((err) => {

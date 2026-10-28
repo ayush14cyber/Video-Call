@@ -31,6 +31,9 @@ class ApiGatewayWebSocketAdapter {
           }
         }, 300000);
 
+        // Notify local listeners that the WebSocket connection is open
+        this.emitLocal("connect");
+
         // Flush any queued messages
         while (this.messageQueue.length > 0) {
           const msg = this.messageQueue.shift();
@@ -46,7 +49,7 @@ class ApiGatewayWebSocketAdapter {
           switch (type) {
             case "connect":
               this.id = payload.id;
-              this.emitLocal("connect");
+              this.emitLocal("connect", payload.id);
               break;
 
             case "user-joined":
@@ -152,8 +155,12 @@ export const connectSocket = (url, options = {}) => {
     return new ApiGatewayWebSocketAdapter(url);
   }
 
-  // Fallback to standard Socket.IO client for local dev server
-  return io.connect(url, options);
+  // Socket.IO client for standard servers (Render, local, etc.)
+  const isHttps = url.startsWith("https");
+  return io.connect(url, {
+    ...options,
+    ...(isHttps ? { secure: true } : {})
+  });
 };
 
 export default connectSocket;

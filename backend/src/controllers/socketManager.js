@@ -5,12 +5,10 @@ let messages = {}
 let timeOnline = {}
 
 export const connectToSocket = (server) => {
-    const io = new Server(server, { // this is to handle error related to CORS policy as the error will occur to the IO and not the express server
+    const io = new Server(server, {
         cors: {
             origin: "*",
-            methods: ["GET", "POST"],
-            allowedHeaders: ["*"],
-            credentials: true
+            methods: ["GET", "POST"]
         }
     });
 

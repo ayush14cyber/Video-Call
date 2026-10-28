@@ -1,6 +1,12 @@
 frontend/node_modules
 backend/node_modules
+frontend/dist
+dist
+.serverless
+backend/.serverless/
 .env
+.env.*
+!.env.example
 interview_questions_part1.md
 interview_questions_part2.md
 interview_questions_part3.md
