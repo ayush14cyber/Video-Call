@@ -106,6 +106,7 @@ export const handler = async (event, context) => {
             data: msg.data,
             sender: msg.sender,
             socketIdSender: msg.socketIdSender,
+            id: msg._id.toString(),
           });
         }
 
@@ -137,7 +138,7 @@ export const handler = async (event, context) => {
           const path = userConn.meetingPath;
 
           // Save message in MongoDB
-          await WsMessage.create({
+          const newMsg = await WsMessage.create({
             meetingPath: path,
             sender: sender,
             data: data,
@@ -152,6 +153,7 @@ export const handler = async (event, context) => {
               data: data,
               sender: sender,
               socketIdSender: connectionId,
+              id: newMsg._id.toString(),
             });
           }
         }

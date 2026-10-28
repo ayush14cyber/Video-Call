@@ -61,7 +61,13 @@ class ApiGatewayWebSocketAdapter {
               break;
 
             case "chat-message":
-              this.emitLocal("chat-message", payload.data, payload.sender, payload.socketIdSender);
+              this.emitLocal(
+                "chat-message",
+                payload.data,
+                payload.sender,
+                payload.socketIdSender,
+                payload.id
+              );
               break;
 
             case "user-left":

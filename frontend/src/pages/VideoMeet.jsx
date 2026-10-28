@@ -36,6 +36,7 @@ export default function VideoMeetComponent() {
     var socketRef = useRef();
     let socketIdRef = useRef();
     let showModalRef = useRef(true);
+    let hasJoinedRef = useRef(false);
 
     let localVideoRef = useRef();
     const videoRef = useRef([]);
@@ -158,7 +159,11 @@ export default function VideoMeetComponent() {
         if (!audioCtx || audioCtx.state === 'closed') {
             audioCtx = new AudioContext();
         }
-        let oscillator = audioCtx.createOscillator();
+        // True silence: zero-amplitude buffer (no oscillator beep)
+        let buffer = audioCtx.createBuffer(1, audioCtx.sampleRate * 2, audioCtx.sampleRate);
+        let oscillator = audioCtx.createBufferSource();
+        oscillator.buffer = buffer;
+        oscillator.loop = true;
         let dst = oscillator.connect(audioCtx.createMediaStreamDestination());
         oscillator.start();
         audioCtx.resume();
@@ -212,11 +217,17 @@ export default function VideoMeetComponent() {
     }
 
     // TODO
-    let addMessage = (data, sender, socketIdSender) => {
-        setMessages((prevMessages) => [
-            ...prevMessages,
-            { sender: sender, data: data }
-        ]);
+    let addMessage = (data, sender, socketIdSender, id) => {
+        setMessages((prevMessages) => {
+            if (id && prevMessages.some((m) => m.id === id)) {
+                return prevMessages;
+            }
+            return [
+                ...prevMessages,
+                { id: id || (Date.now() + Math.random()), sender: sender, data: data }
+            ];
+        });
+        
 
         if (socketIdSender !== socketIdRef.current && !showModalRef.current) {
             setNewMessages((prevMessages) => prevMessages + 1);
@@ -318,7 +329,10 @@ export default function VideoMeetComponent() {
             else if (socketRef.current.id) {
                 socketIdRef.current = socketRef.current.id;
             }
-            socketRef.current.emit("join-call", window.location.href, username || "Guest");
+            if (!hasJoinedRef.current) {
+                hasJoinedRef.current = true;
+                socketRef.current.emit("join-call", window.location.href, username || "Guest");
+            }
         });
     }
 
@@ -446,6 +460,7 @@ export default function VideoMeetComponent() {
     }
 
     let handleEndCall = () => {
+        hasJoinedRef.current = false;
         // 1. Stop all local media tracks (camera/mic/screen)
         try {
             let tracks = localVideoRef.current.srcObject.getTracks();
