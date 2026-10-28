@@ -3,14 +3,28 @@ import { app } from "../app.js";
 import { connectDB } from "../config/db.js";
 
 const serverlessApp = serverless(app, {
-  // Support binary types if needed
   binary: ["image/*", "application/octet-stream"],
 });
 
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "GET,POST,PUT,DELETE,OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type,Authorization,X-Requested-With,*",
+};
+
 export const handler = async (event, context) => {
-  // Ensure the Lambda function freezes immediately after returning response
-  // rather than waiting for MongoDB socket background timers
   context.callbackWaitsForEmptyEventLoop = false;
+
+  const method = event.requestContext?.http?.method || event.httpMethod;
+
+  // Handle CORS preflight immediately without touching DB
+  if (method === "OPTIONS") {
+    return {
+      statusCode: 200,
+      headers: corsHeaders,
+      body: "",
+    };
+  }
 
   try {
     await connectDB();
@@ -20,11 +34,19 @@ export const handler = async (event, context) => {
       statusCode: 500,
       headers: {
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
+        ...corsHeaders,
       },
       body: JSON.stringify({ message: "Database connection failed", error: err.message }),
     };
   }
 
-  return await serverlessApp(event, context);
+  const response = await serverlessApp(event, context);
+
+  // Ensure CORS headers are always attached
+  response.headers = {
+    ...corsHeaders,
+    ...(response.headers || {}),
+  };
+
+  return response;
 };
